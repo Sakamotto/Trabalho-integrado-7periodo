@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../admin/produto/produto.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-menu-inicio',
   templateUrl: './menu-inicio.component.html',
@@ -15,10 +17,15 @@ export class MenuInicioComponent implements OnInit {
 
   ngOnInit() {
     console.log('Menu Inicio');
-    this.serviceProduto.getAll().subscribe(data => {
-      this.produtos = data;
-      this.showSpinner = false;
-    });
+    setTimeout(() =>{
+      $(document).ready(function() {
+        $('#bxslider-home4').bxSlider();
+      });
+    }, 500);
+    // this.serviceProduto.getAll().subscribe(data => {
+    //   this.produtos = data;
+    //   this.showSpinner = false;
+    // });
   }
 
 }
