@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../admin/produto/produto.service';
-import {CategoriaService} from "../../admin/categoria/categoria.service";
 
 @Component({
   selector: 'app-menu-inicio',
@@ -11,15 +10,25 @@ import {CategoriaService} from "../../admin/categoria/categoria.service";
 export class MenuInicioComponent implements OnInit {
 
   public produtos = [];
+  public filtroNomeProduto: string = '';
   public showSpinner = true;
   constructor(private serviceProduto: ProdutoService) { }
 
   ngOnInit() {
     console.log('Menu Inicio');
-    this.serviceProduto.getAll().subscribe(data => {
+    // this.serviceProduto.getAll().subscribe(data => {
+    //   this.produtos = data;
+    //   this.showSpinner = false;
+    // });
+  }
+
+  public buscar() {
+    const filtros = {nome: this.filtroNomeProduto};
+    this.serviceProduto.getAll(filtros).subscribe(data =>{
       this.produtos = data;
-      this.showSpinner = false;
+      console.log(data);
     });
+    console.log('Buscando: ', this.filtroNomeProduto);
   }
 
 }
