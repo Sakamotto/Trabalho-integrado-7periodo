@@ -21,6 +21,9 @@ export class ServiceBase {
     }
 
     public getAll(filtros?: any): Observable<any> {
+        if(filtros){
+            return this.http.get(this.END_POINT_URL + '?filtros=' + JSON.stringify(filtros)).map(data => data.json());
+        }
         return this.http.get(this.END_POINT_URL).map(data => data.json());
     }
 
