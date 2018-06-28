@@ -87,7 +87,7 @@ export class ProdutoDetalheComponent implements OnInit {
         console.log('Loop', exemplar, this.tamEscolhido, this.corEscolhida);
         if (exemplar.tamanhoId == this.tamEscolhido && exemplar.cor == this.corEscolhida && exemplar.quantidade > 0) {
           console.log('IF');
-          let resposta: boolean = this.carrinhoService.adicionarProduto(exemplar);
+          let resposta: boolean = this.carrinhoService.adicionarProduto(exemplar.id);
           if (resposta) {
             this.toastr.success('Sucesso!', 'Produto Adicionado ao Carrinho!');
             if (redirecionar) this.router.navigate(['carrinho']);

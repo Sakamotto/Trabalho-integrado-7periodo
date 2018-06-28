@@ -6,13 +6,12 @@ import { ExemplarProduto } from '../../admin/produto/exemplar-produto.model';
 @Injectable()
 export class CarrinhoService {
     // tslint:disable:prefer-const
-    adicionarProduto(exemplar: ExemplarProduto): boolean  {
+    adicionarProduto(exemplarId: number): boolean  {
         // Verificar se já existe um carrinho com produtos
         if (localStorage.getItem('carrinho_online')) {
-            let dados: Array<ExemplarProduto> = JSON.parse(localStorage.getItem('carrinho_online'));
-            dados.push(exemplar);
+            let dados: Array<number> = JSON.parse(localStorage.getItem('carrinho_online'));
+            dados.push(exemplarId);
             localStorage.setItem('carrinho_online', JSON.stringify(dados));
-            /*
             console.log(exemplarId, dados.indexOf(exemplarId));
             if(dados.indexOf(exemplarId) == -1){
                 dados.push(exemplarId);
@@ -20,10 +19,8 @@ export class CarrinhoService {
                 return true;
             }
             return false;
-            */
-            return true;
         } else {
-            localStorage.setItem('carrinho_online', JSON.stringify([exemplar]));
+            localStorage.setItem('carrinho_online', JSON.stringify([exemplarId]));
             return true;
         }
     }
@@ -32,11 +29,11 @@ export class CarrinhoService {
         return JSON.parse(localStorage.getItem('carrinho_online'));
     }
 
-    removerProduto(exemplar: ExemplarProduto) {
+    removerProduto(exemplarId: number) {
         // Verificar se já existe um carrinho com produtos
         if (localStorage.getItem('carrinho_online')) {
-            let dados: Array<ExemplarProduto> = JSON.parse(localStorage.getItem('carrinho_online'));
-            dados.splice(dados.indexOf(exemplar), 1);
+            let dados: Array<number> = JSON.parse(localStorage.getItem('carrinho_online'));
+            dados.splice(dados.indexOf(exemplarId), 1);
             localStorage.setItem('carrinho_online', JSON.stringify(dados));
         }
     }

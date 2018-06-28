@@ -7,4 +7,5 @@ export class ExemplarProduto {
     produtoId?: number; // REQUIRED
     tamanho?: any;
     produto?: any;
+    quantidadeComprada: number = 1;
 }
