@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<!-- <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -29,100 +29,102 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> -->
 
-<div class="container-fluid">
-    <div class="row" *ngFor="let produto of produtos">
-        <div class="col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading"> Nome:
-                    <b>{{produto.produto.nome}}</b>
-                </div>
-                <div class="panel-body">
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <a href="./assets/imagens/carrosel-1.jpg">
-                                <img src="{{produto.produto?.imagens[0].link}}" class="img-thumbnail" alt="Cinque Terre" width="150" height="100">
-                                <div class="caption">
-                                    <p>
-                                        <b>Cor: </b>{{produto.cor}}</p>
-                                    <p>
-                                        <b>Tamanho:</b> P</p>
-                                </div>
-                            </a>
+<div class="container" style="margin-top: 7%;">
+    <div class="container-fluid">
+        <div class="row" *ngFor="let produto of produtos">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Nome:
+                        <b>{{produto.produto.nome}}</b>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-3">
+                            <div class="thumbnail">
+                                <a href="./assets/imagens/carrosel-1.jpg">
+                                    <img src="{{produto.produto?.imagens[0].link}}" class="img-thumbnail" alt="Cinque Terre" width="150" height="100">
+                                    <div class="caption">
+                                        <p>
+                                            <b>Cor: </b>{{produto.cor}}</p>
+                                        <p>
+                                            <b>Tamanho:</b> P</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <!-- <div class="col-sm-2">
-                        <p>
-                            <b> R$: {{produto.venda}}</b>
-                        </p>
-                    </div> -->
-                    <div class="col-sm-4">
-                        <input class="input-sm" type="number" id="quantidade" name="quantidade" [(ngModel)]="quantidade" (change)="calculaSubtotal()">
-                    </div>
-                    <div class="col-sm-4">
-                        <p>
-                            <b> Preço R$: {{calcularPreco(produto.produto.venda, quantidade)}}</b>
-                        </p>
+                        <!-- <div class="col-sm-2">
+                                    <p>
+                                        <b> R$: {{produto.venda}}</b>
+                                    </p>
+                                </div> -->
+                        <div class="col-sm-4">
+                            <input class="input-sm" type="number" id="quantidade" name="quantidade" [(ngModel)]="quantidade" (change)="calculaSubtotal()">
+                        </div>
+                        <div class="col-sm-4">
+                            <p>
+                                <b> Preço R$: {{calcularPreco(produto.produto.venda, quantidade)}}</b>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <b>Subtotal:</b> R$ {{subtotal}}
-                </div>
-                <hr />
-                <div class="panel-body">
-                    <p>Entrega: R$ 13,90</p>
+
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b>Subtotal:</b> R$ {{subtotal}}
+                    </div>
                     <hr />
-                    <div>
-                        <label for="cupomDesconto">Calcular Frete:</label>
+                    <div class="panel-body">
+                        <p>Entrega: R$ 13,90</p>
+                        <hr />
+                        <div>
+                            <label for="cupomDesconto">Calcular Frete:</label>
+                        </div>
+                        <div>
+                            <input class="input-sm" type="text" id="cupomDesconto" name="cupomDesconto">
+                            <button type="button" class="btn btn-info">Calcular</button>
+                        </div>
+                        <div class="panel-footer">
+                            <p>Total:</p>
+                        </div>
                     </div>
-                    <div>
-                        <input class="input-sm" type="text" id="cupomDesconto" name="cupomDesconto">
-                        <button type="button" class="btn btn-info">Calcular</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" *ngIf="usuarioLogado()">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Nome:
+                        <b>Adalberto Pedrosa Sinvastatina</b>
                     </div>
-                    <div class="panel-footer">
-                        <p>Total:</p>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p>
+                                    <b>CPF:</b> 123.456.789-90</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <p>
+                                    <b>Telefone:</b> 999115229</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <P>
+                                    <b>Endereço:</b> Maria de Lourdes garcia, Ilha de Monte Belo, Vitoria-ES - 29051250</P>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- <div class="row">
+                    
+                </div> -->
     </div>
-
-    <div class="row" *ngIf="usuarioLogado()">
-        <div class="col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">Nome:
-                    <b>Adalberto Pedrosa Sinvastatina</b>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>
-                                <b>CPF:</b> 123.456.789-90</p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p>
-                                <b>Telefone:</b> 999115229</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <P>
-                                <b>Endereço:</b> Maria de Lourdes garcia, Ilha de Monte Belo, Vitoria-ES - 29051250</P>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- <div class="row">
-        
-    </div> -->
 </div>

@@ -27,6 +27,7 @@ import { DashboardInicioComponent } from './loja/dashboard-inicio/dashboard-inic
 import { DashboardInicioModule } from './loja/dashboard-inicio/dashboard-inicio.module';
 import { MenuInicioModule } from './loja/menu-inicio/menu-inicio.module';
 import { SharedModule } from './admin/shared/shared.module';
+import { CarrinhoModule } from './loja/carrinho/carrinho.module';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { SharedModule } from './admin/shared/shared.module';
     TemplateComponent,
     LoginComponent,
     ProdutoDescricaoPipe,
-    CarrinhoComponent,
+    // CarrinhoComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +55,7 @@ import { SharedModule } from './admin/shared/shared.module';
     DashboardInicioModule,
     ProdutoDetalheModule,
     MenuInicioModule,
+    CarrinhoModule,
     SharedModule
   ],
   exports: [],

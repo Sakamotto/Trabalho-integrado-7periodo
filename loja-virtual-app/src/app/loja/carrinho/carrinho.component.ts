@@ -30,15 +30,15 @@ export class CarrinhoComponent implements OnInit {
   constructor(private produtoService: ProdutoService, private carrinhoService: CarrinhoService) { }
 
   ngOnInit() {
+    console.log('Carrinho Aqui!');
     this.carregar();
   }
 
   public carregar() {
-    let listaCarrinho: Array<ExemplarProduto> = this.carrinhoService.getProdutos();
+    const listaCarrinho: Array<ExemplarProduto> = this.carrinhoService.getProdutos();
     listaCarrinho.forEach(p => this.produtoService.getExemplarCarrinho(p.id)
       .subscribe(data => {
         this.produtos.push(data);
-        console.log('Dados: ', data);
       })
     );
   }
@@ -48,12 +48,10 @@ export class CarrinhoComponent implements OnInit {
   }
 
   public getExemplarCarrinho(produto: Produto, exemplarId: number) {
-    return produto.exemplarprodutos.find(e => e.id == exemplarId);
+    return produto.exemplarprodutos.find(e => e.id === exemplarId);
   }
 
-  calcularPreco(venda, quantidade){
-    console.log(this.produtos);
-    // this.produtos.
+  calcularPreco(venda, quantidade) {
     return (venda * quantidade).toFixed(2);
   }
 
