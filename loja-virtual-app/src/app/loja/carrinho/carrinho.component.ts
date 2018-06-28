@@ -24,7 +24,7 @@ export class CarrinhoComponent implements OnInit {
   public categorias: Array<any>;
   public categoriaAtual: any;
   public quantidadeSelecionada: number = 1;
-  public subtotal: number;
+  public subtotal: number = 0;
   public quantidade: number = 1;
 
   constructor(private produtoService: ProdutoService, private carrinhoService: CarrinhoService) { }
@@ -35,12 +35,22 @@ export class CarrinhoComponent implements OnInit {
   }
 
   public carregar() {
-    const listaCarrinho: Array<ExemplarProduto> = this.carrinhoService.getProdutos();
-    listaCarrinho.forEach(p => this.produtoService.getExemplarCarrinho(p.id)
+    const listaCarrinho: Array<number> = this.carrinhoService.getProdutos();
+    listaCarrinho.forEach(p => this.produtoService.getExemplarCarrinho(p)
       .subscribe(data => {
         this.produtos.push(data);
+        // console.log('Dados: ', data);
+        this.corrigiQuantidade();
+        this.calculaSubtotal();
       })
     );
+  }
+
+
+  public corrigiQuantidade() {
+    for (let i = 0; i < this.produtos.length; i++) {
+      this.produtos[i].quantidadeComprada = 1;
+    }
   }
 
   public usuarioLogado() {
@@ -55,25 +65,27 @@ export class CarrinhoComponent implements OnInit {
     return (venda * quantidade).toFixed(2);
   }
 
-  public excluir() {
-    if (this.paraExcluir) {
-      this.produtoService.delete(this.paraExcluir.id)
-        .subscribe(deletado => {
-          this.carregar();
-          console.log('Produto deletado com sucesso!!');
-        });
+  /*
+    public excluir() {
+      if (this.paraExcluir) {
+        this.produtoService.delete(this.paraExcluir.id)
+          .subscribe(deletado => {
+            this.carregar();
+            console.log('Produto deletado com sucesso!!');
+          });
+      }
     }
-  }
 
-  public marcarParaExcluir(produto: any) {
-    this.paraExcluir = produto;
-  }
+    public marcarParaExcluir(produto: any) {
+      this.paraExcluir = produto;
+    }
+  */
 
   public calculaSubtotal() {
     this.subtotal = 0;
-    for (let i = 0; i < this.listaFiltrada.length; i++) {
-      this.subtotal += (this.listaFiltrada[i].quantidade * this.listaFiltrada[i].venda);
-      console.log(this.subtotal);
+    console.log(this.produtos);
+    for (let i = 0; i < this.produtos.length; i++) {
+      this.subtotal += (this.produtos[i].quantidadeComprada * this.produtos[i].produto.venda);
     }
   }
 
