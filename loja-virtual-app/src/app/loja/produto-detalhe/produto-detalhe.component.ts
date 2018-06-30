@@ -24,7 +24,7 @@ export class ProdutoDetalheComponent implements OnInit {
   public sub: any;
   public categoriaId = 1;
   public linhaCores = '';
-  public tamEscolhido;
+  public tamEscolhido: number;
   public corEscolhida = '';
   public tamanhoInvalido = false;
   public carrinho: Carrinho = new Carrinho();
@@ -42,7 +42,7 @@ export class ProdutoDetalheComponent implements OnInit {
   ) {
     this.produto = new Produto();
     this.carrinho = new Carrinho();
-    this.corEscolhida = "Azul";
+    this.corEscolhida = 'Azul';
   }
 
   ngOnInit() {
@@ -83,16 +83,17 @@ export class ProdutoDetalheComponent implements OnInit {
       this.tamanhoInvalido = true;
     } else {
       for (let i = 0; i < this.produto.exemplarprodutos.length; i++) {
-        let exemplar: ExemplarProduto = this.produto.exemplarprodutos[i];
-        console.log('Loop', exemplar, this.tamEscolhido, this.corEscolhida);
-        if (exemplar.tamanhoId == this.tamEscolhido && exemplar.cor == this.corEscolhida && exemplar.quantidade > 0) {
-          console.log('IF');
-          let resposta: boolean = this.carrinhoService.adicionarProduto(exemplar.id);
+        const exemplar: ExemplarProduto = this.produto.exemplarprodutos[i];
+        if (exemplar.tamanhoId === (+this.tamEscolhido) && exemplar.cor === this.corEscolhida && exemplar.quantidade > 0) {
+          const resposta = this.carrinhoService.adicionarProduto(exemplar.id);
           if (resposta) {
             this.toastr.success('Sucesso!', 'Produto Adicionado ao Carrinho!');
-            if (redirecionar) this.router.navigate(['loja/carrinho']);
+            if (redirecionar) {
+              this.router.navigate(['loja/carrinho']);
+            }
+          } else {
+            this.toastr.warning('Produto ja Adicionado ao Carrinho', 'Aviso!');
           }
-          else this.toastr.warning("Produto ja Adicionado ao Carrinho", "Aviso!");
         }
       }
     }

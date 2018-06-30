@@ -26,11 +26,18 @@ export class CarrinhoComponent implements OnInit {
   public quantidadeSelecionada: number = 1;
   public subtotal: number = 0;
   public quantidade: number = 1;
+  public showSpinner = true;
+  public cep = '';
+  public valorFrete: number = 0;
 
-  constructor(private produtoService: ProdutoService, private carrinhoService: CarrinhoService) { }
+  public tamanhos = [{ id: 1, nome: 'PP' }, { id: 2, nome: 'P' }, { id: 3, nome: 'M' }, { id: 4, nome: 'G' }, { id: 5, nome: 'GG' }];
+
+  constructor(private produtoService: ProdutoService,
+    private carrinhoService: CarrinhoService,
+    private http: Http
+  ) { }
 
   ngOnInit() {
-    console.log('Carrinho Aqui!');
     this.carregar();
   }
 
@@ -39,11 +46,12 @@ export class CarrinhoComponent implements OnInit {
     listaCarrinho.forEach(p => this.produtoService.getExemplarCarrinho(p)
       .subscribe(data => {
         this.produtos.push(data);
-        // console.log('Dados: ', data);
         this.corrigiQuantidade();
         this.calculaSubtotal();
+        this.showSpinner = false;
       })
     );
+    this.showSpinner = false;
   }
 
 
@@ -65,27 +73,27 @@ export class CarrinhoComponent implements OnInit {
     return (venda * quantidade).toFixed(2);
   }
 
-  /*
-    public excluir() {
-      if (this.paraExcluir) {
-        this.produtoService.delete(this.paraExcluir.id)
-          .subscribe(deletado => {
-            this.carregar();
-            console.log('Produto deletado com sucesso!!');
-          });
-      }
-    }
-
-    public marcarParaExcluir(produto: any) {
-      this.paraExcluir = produto;
-    }
-  */
+  public remover(produto: ExemplarProduto) {
+    const index = this.produtos.indexOf(produto);
+    this.produtos.splice(index, 1);
+    this.carrinhoService.removerProduto(produto.id);
+    this.calculaSubtotal();
+  }
 
   public calculaSubtotal() {
     this.subtotal = 0;
-    console.log(this.produtos);
     for (let i = 0; i < this.produtos.length; i++) {
       this.subtotal += (this.produtos[i].quantidadeComprada * this.produtos[i].produto.venda);
+    }
+    this.subtotal += this.valorFrete;
+  }
+
+  public calcularFrete() {
+    if (this.cep) {
+      this.produtoService.calcularFrete(this.cep).subscribe(data => {
+        this.valorFrete = +((data.cResultado.Servicos[0].cServico[0].Valor[0]).replace(',', '.'));
+        this.calculaSubtotal();
+      });
     }
   }
 

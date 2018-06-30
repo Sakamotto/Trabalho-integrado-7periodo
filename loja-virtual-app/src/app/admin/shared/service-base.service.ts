@@ -12,16 +12,16 @@ export class ServiceBase {
     protected END_POINT_URL: string;
 
     constructor
-    (
+        (
         protected http: Http,
         protected router: Router,
         protected tipo: string
-    ) {
+        ) {
         this.END_POINT_URL = AppConfig.BASE_URL() + this.tipo;
     }
 
     public getAll(filtros?: any): Observable<any> {
-        if(filtros){
+        if (filtros) {
             return this.http.get(this.END_POINT_URL + '?filtros=' + JSON.stringify(filtros)).map(data => data.json());
         }
         return this.http.get(this.END_POINT_URL).map(data => data.json());
@@ -54,6 +54,10 @@ export class ServiceBase {
         return this.http.get(this.END_POINT_URL + '/' + path, this.getHeaders()).map(data => data.json());
     }
 
+    public getAnyWithParameters(path: string, param: any): Observable<any> {
+        return this.http.get(this.END_POINT_URL + '/' + path, { params: param }).map(data => data.json());
+    }
+
     public getHeaders(): RequestOptions {
         const headers = new Headers({ 'Content-Type': 'application/json' });
         // if (includeToken && loginService.estaLogado()) {
@@ -61,7 +65,7 @@ export class ServiceBase {
         headers.append('Authorization', 'Bearer ' + token);
         // headers.append('Authorization', token);
         // }
-        const options = new RequestOptions({headers: headers});
+        const options = new RequestOptions({ headers: headers });
         return options;
     }
 }

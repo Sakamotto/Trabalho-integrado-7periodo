@@ -9,13 +9,16 @@ import { Observable } from 'rxjs/Observable';
 export class ProdutoService extends ServiceBase {
 
     constructor(protected http: Http,
-        protected router: Router)
-    {
+        protected router: Router) {
         super(http, router, 'produto');
     }
 
     getExemplarCarrinho(exemplarId: number): Observable<any> {
         return this.postAny('carrinho', {exemplarId: exemplarId});
+    }
+
+    calcularFrete(cep: string): Observable<any> {
+        return this.getAnyWithParameters('calcularFrete', {cep: cep});
     }
 
 }
