@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../admin/produto/produto.service';
-import { CategoriaService } from "../../admin/categoria/categoria.service";
+import { CategoriaService } from '../../admin/categoria/categoria.service';
+import { Filtro } from '../shared-services/filtro.model';
 
 @Component({
   selector: 'app-dashboard-inicio',
@@ -14,11 +15,15 @@ export class DashboardInicioComponent implements OnInit {
   public categorias = [];
   public produtos = [];
   public showSpinner = true;
+  public filtroNomeProduto = '';
+  public filtroCategoriaId: number = null;
+  public filtroPrecoMin: number = null;
+  public filtroPrecoMax: number = null;
+  public filtros: Filtro = new Filtro();
   constructor(private serviceProduto: ProdutoService, private serviceCategoria: CategoriaService) { }
 
   ngOnInit() {
     this.serviceProduto.getAll().subscribe(data => {
-      console.log('Dashboard Inicio');
       this.produtos = data;
       this.showSpinner = false;
     });
@@ -28,18 +33,17 @@ export class DashboardInicioComponent implements OnInit {
     });
   }
 
-  filtrarCategoria(id) {
-    if (id in this.filtroCategoria) {
-
-    } else {
-
-    }
+  public buscar() {
+    this.filtros.nome = this.filtroNomeProduto;
+    this.filtros.categoriaId = this.filtroCategoriaId;
+    this.filtros.precoMin = this.filtroPrecoMin;
+    this.filtros.precoMax = this.filtroPrecoMax;
 
     this.showSpinner = true;
-    this.serviceProduto.getAll()
-
-
-    this.showSpinner = false;
+    this.serviceProduto.getAll(this.filtros).subscribe(data => {
+      this.produtos = data;
+      this.showSpinner = false;
+    });
   }
 
 }
