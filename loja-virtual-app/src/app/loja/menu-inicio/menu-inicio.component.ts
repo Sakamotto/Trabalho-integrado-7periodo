@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../admin/produto/produto.service';
+import { LoginService } from '../../admin/login/login.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-inicio',
@@ -10,25 +13,44 @@ import { ProdutoService } from '../../admin/produto/produto.service';
 export class MenuInicioComponent implements OnInit {
 
   public produtos = [];
-  public filtroNomeProduto: string = '';
+  public filtroNomeProduto = '';
   public showSpinner = true;
-  constructor(private serviceProduto: ProdutoService) { }
+  public email: string;
+  public senha: string;
+  public userName: string;
+  constructor(private serviceProduto: ProdutoService,
+    private loginService: LoginService,
+    private toastr: ToastrService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    console.log('Menu Inicio');
-    // this.serviceProduto.getAll().subscribe(data => {
-    //   this.produtos = data;
-    //   this.showSpinner = false;
-    // });
+    if (this.usuarioLogado()) {
+      const user = this.loginService.getUserInfo();
+      this.userName = user.nome + ' ' + user.sobrenome;
+    }
   }
 
   public buscar() {
-    const filtros = {nome: this.filtroNomeProduto};
-    this.serviceProduto.getAll(filtros).subscribe(data =>{
+    const filtros = { nome: this.filtroNomeProduto };
+    this.serviceProduto.getAll(filtros).subscribe(data => {
       this.produtos = data;
       console.log(data);
     });
-    console.log('Buscando: ', this.filtroNomeProduto);
+  }
+
+  public login() {
+    this.loginService.loginAndStore(this.email, this.senha);
+    window.location.reload();
+  }
+
+  public logout() {
+    this.loginService.logoutCliente();
+    window.location.reload();
+  }
+
+  public usuarioLogado() {
+    return this.loginService.usuarioLogado();
   }
 
 }

@@ -2,14 +2,14 @@
   <div class="carousel fade-carousel slide" data-ride="carousel" data-interval="3000" id="bs-carousel">
     <!-- Overlay -->
     <div class="overlay"></div>
-  
+
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
       <!-- <li data-target="#bs-carousel" data-slide-to="1"></li>
       <li data-target="#bs-carousel" data-slide-to="2"></li> -->
     </ol>
-    
+
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item slides active">
@@ -42,115 +42,133 @@
           <button class="btn btn-hero btn-lg" role="button">See all features</button>
         </div>
       </div> -->
-    </div> 
+    </div>
   </div>
 
-<!-- Page Content -->
-<div class="container">
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
 
-  <div class="row">
+      <div class="col-md-3">
 
-    <div class="col-md-3">
-        <a class="list-group-item list-group-item-info catalog-filter-head"><span class="glyphicon glyphicon-minus"></span> Roupas</a>
+        <div class="list-group">
+          <a class="list-group-item list-group-item-info catalog-filter-head">
+            <span class="glyphicon glyphicon-plus"></span> Produtos</a>
+            <div class="input-group">
+                <input [(ngModel)]="filtroNomeProduto" type="text" class="form-control" placeholder="O que você procura?">
+                <span class="input-group-btn">
+                    <button (click)="buscar()" type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
+                </span>
+            </div>
+        </div>
+
+        <a class="list-group-item list-group-item-info catalog-filter-head">
+          <span class="glyphicon glyphicon-plus"></span> Categoria
+        </a>
 
         <ul class="catalog-filter-list list-group">
-            <li class="catalog-filter-list-item" *ngFor="let c of categorias">
-                <input type="checkbox" (click)="filtrarCategoria(c.id)" name="cc">
-                <a href="#">{{ c.nome }}</a>
-            </li>
+            <select class="form-control" name="comboCategorias" (change)="buscar()" [(ngModel)]="filtroCategoriaId">
+              <option [ngValue]="null">Selecione</option>
+              <option *ngFor="let c of categorias;" [ngValue]="c.id">{{ c.nome }}</option>
+            </select>
+          <!-- <li class="catalog-filter-list-item" *ngFor="let c of categorias">
+            <input id="categoria-{{c.id}}" type="checkbox" (change)="buscar(c.id, this.value)" name="categoria-{{c.id}}">
+            <span>{{ c.nome }}</span>
+          </li> -->
         </ul>
 
-      <div class="list-group">
-        <a class="list-group-item list-group-item-info catalog-filter-head"><span class="glyphicon glyphicon-minus"></span> Preço</a>
-        <input class="list-group-item price-filter-list" placeholder="Minimo (R$)" type="number" id="precomin">
-        <input class="list-group-item price-filter-list" placeholder="Máximo (R$)" type="number" id="precomax">
+        <div class="list-group">
+          <a class="list-group-item list-group-item-info catalog-filter-head">
+            <span class="glyphicon glyphicon-plus"></span> Preço</a>
+          <input [(ngModel)]="filtroPrecoMin" (change)="buscar()" class="list-group-item price-filter-list" placeholder="Minimo (R$)" type="number" id="precomin">
+          <input [(ngModel)]="filtroPrecoMax" (change)="buscar()" class="list-group-item price-filter-list" placeholder="Máximo (R$)" type="number" id="precomax">
+        </div>
       </div>
-    </div>
 
-    <div class="col-md-9">
-      <div class="row">
+      <div class="col-md-9">
+        <div class="row">
 
-        <loading-spinner *ngIf="showSpinner"></loading-spinner>
+          <loading-spinner *ngIf="showSpinner"></loading-spinner>
 
-        <div class="col-sm-3 col-lg-3 col-md-3 produto" *ngFor="let p of produtos">
-          <div class="thumbnail">
-            <img src="{{p.imagens[0]?.link}}" alt="">
-            <div class="caption">
-              <h4>
-                <a routerLink="produto-detalhe/{{p.id}}">{{p.nome}}</a>
-              </h4>
-              <h4>
-                <s style="color: #555555;">$89.90</s> {{p.venda}}
-              </h4>
-              <div class="ratings">
-                <p style="color: #000;">
-                  <span class="glyphicon glyphicon-star gold-star"></span>
-                  <span class="glyphicon glyphicon-star gold-star"></span>
-                  <span class="glyphicon glyphicon-star gold-star"></span>
-                  <span class="glyphicon glyphicon-star gold-star"></span>
-                  <span class="glyphicon glyphicon-star black-star"></span>
-                  (11)
-                </p>
+          <div class="col-sm-3 col-lg-3 col-md-3 produto" *ngFor="let p of produtos">
+            <div class="thumbnail">
+              <img src="{{p.imagens[0]?.link}}" alt="">
+              <div class="caption">
+                <h4>
+                  <a routerLink="produto-detalhe/{{p.id}}">{{p.nome}}</a>
+                </h4>
+                <h4>
+                  <s style="color: #555555;">$89.90</s> {{p.venda}}
+                </h4>
+                <div class="ratings">
+                  <p style="color: #000;">
+                    <span class="glyphicon glyphicon-star gold-star"></span>
+                    <span class="glyphicon glyphicon-star gold-star"></span>
+                    <span class="glyphicon glyphicon-star gold-star"></span>
+                    <span class="glyphicon glyphicon-star gold-star"></span>
+                    <span class="glyphicon glyphicon-star black-star"></span>
+                    (11)
+                  </p>
 
+                </div>
+                <p>Parcele em até 3x 23,30</p>
               </div>
-              <p>Parcele em até 3x 23,30</p>
             </div>
           </div>
+
+        </div>
+
+        <div *ngIf="produtos.length > 0" class="col-center-block">
+          <nav aria-label="Page navigation" style="text-align: center">
+            <ul class="row pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li>
+                <a class="active" href="#">1</a>
+              </li>
+              <li>
+                <a href="#">2</a>
+              </li>
+              <li>
+                <a href="#">3</a>
+              </li>
+              <li>
+                <a href="#">4</a>
+              </li>
+              <li>
+                <a href="#">5</a>
+              </li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
 
       </div>
 
-      <div class="col-center-block">
-        <nav aria-label="Page navigation" style="text-align: center">
-          <ul class="row pagination">
-            <li>
-              <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li>
-              <a class="active" href="#">1</a>
-            </li>
-            <li>
-              <a href="#">2</a>
-            </li>
-            <li>
-              <a href="#">3</a>
-            </li>
-            <li>
-              <a href="#">4</a>
-            </li>
-            <li>
-              <a href="#">5</a>
-            </li>
-            <li>
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-
     </div>
 
   </div>
+  <!-- /.container -->
 
-</div>
-<!-- /.container -->
+  <div class="container">
 
-<div class="container">
+    <hr>
 
-  <hr>
-
-  <!-- Footer -->
-  <footer>
-    <div class="row">
-      <div class="col-lg-12">
-        <p>Copyright &copy; Cantinho das Meninas 2018</p>
+    <!-- Footer -->
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Cantinho das Meninas 2018</p>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-</div>
+  </div>
 </div>

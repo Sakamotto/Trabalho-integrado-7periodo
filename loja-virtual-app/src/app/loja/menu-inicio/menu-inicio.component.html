@@ -15,28 +15,33 @@
 
 
             <li>
-                <a href="#" routerLink="/loja/carrinho">
+                <a style="cursor: pointer" routerLink="/loja/carrinho">
                     <span class="glyphicon glyphicon-shopping-cart"></span> Meu Carrinho
                 </a>
             </li>
 
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-user"></span> Minha Conta</a>
+                <a *ngIf="usuarioLogado()" style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-user"></span> {{userName}}</a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#">Meu Perfil</a>
+                        <a style="cursor: pointer" >Meu Perfil</a>
                     </li>
                     <li>
-                        <a href="#">Minhas Compras</a>
+                        <a style="cursor: pointer">Minhas Compras</a>
+                    </li>
+                    <li>
+                        <a style="cursor: pointer" (click)="logout()">Sair</a>
                     </li>
                 </ul>
             </li>
 
 
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user"></span> Login</a>
+                <a style="cursor: pointer;" *ngIf="!usuarioLogado()" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user"></span> Login
+                </a>
+
                 <ul id="login-dp" class="dropdown-menu">
                     <li>
                         <div class="row">
@@ -51,24 +56,24 @@
                                 <p style="text-align: center">or</p>
                                 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
                                     <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+                                        <label class="sr-only" for="exampleInputEmail2">Email</label>
+                                        <input type="email" class="form-control" [(ngModel)]="email" name="exampleInputEmail2" placeholder="Email address" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                                        <input type="password" class="form-control" [(ngModel)]="senha" name="exampleInputPassword2" placeholder="Password" required>
                                         <div class="help-block text-right">
                                             <a href="">Forget the password ?</a>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                        <button type="submit" (click)="login()" class="btn btn-primary btn-block">Entrar</button>
                                     </div>
-                                    <div class="checkbox" style="text-align: left">
+                                    <!-- <div class="checkbox" style="text-align: left">
                                         <label>
                                             <input type="checkbox"> keep me logged-in
                                         </label>
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
                             <div class="bottom text-center">
@@ -83,7 +88,6 @@
             </li>
 
         </ul>
-
 
         <div class="nav navbar-nav col-md-8">
             <div class="input-group">
