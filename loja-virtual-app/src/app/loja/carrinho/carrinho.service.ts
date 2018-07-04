@@ -36,27 +36,27 @@ export class CarrinhoService {
     }
 
     removerProdutos() {
-        // Apaga o conteúdo do carrinho
         localStorage.removeItem('carrinho_online');
     }
-    
-    adicionarCliente(clienteId: number){
+
+    adicionarCliente(clienteId: number) {
         localStorage.setItem('cliente', JSON.stringify(clienteId));
-        
+
     }
     getCliente() {
         return JSON.parse(localStorage.getItem('cliente'));
     }
-    adicionarSubtotal(subtotal: number){
+
+    adicionarSubtotal(subtotal: number) {
         localStorage.setItem('subtotal', JSON.stringify(subtotal));
-        
+
     }
     getSubtotal() {
         return JSON.parse(localStorage.getItem('subtotal'));
     }
-    adicionarFrete(frete: number){
+    adicionarFrete(frete: number) {
         localStorage.setItem('frete', JSON.stringify(frete));
-        
+
     }
     getfrete() {
         return JSON.parse(localStorage.getItem('frete'));

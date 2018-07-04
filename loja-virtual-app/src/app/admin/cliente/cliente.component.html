@@ -10,32 +10,42 @@
         <label name="nome">Nome:</label>
         <input type="text" [(ngModel)]="cliente.nome" class="form-control" id="nome" name="nome">
       </div>
-      
+
       <div class="form-group col-md-4">
         <label name="sobrenmome">Sobrenome:</label>
         <input type="text" [(ngModel)]="cliente.sobrenome" class="form-control" id="sobrenome" name="sobrenome">
       </div>
-      
+
       <div class="form-group col-md-4">
         <label name="email">Email:</label>
         <input type="text" [(ngModel)]="cliente.email" class="form-control" id="email" name="email">
 
         <!-- <input type="text" [(ngModel)]="cliente.email" class="form-control" id="email" name="email"> -->
       </div>
-      
+
+      <div class="form-group col-md-4">
+        <label name="cpf">Telefone:</label>
+        <input type="text" [(ngModel)]="cliente.telefone" class="form-control" id="telefone" name="telefone">
+      </div>
+
+      <div class="form-group col-md-4">
+        <label name="cpf">CPF:</label>
+        <input type="text" [(ngModel)]="cliente.cpf" class="form-control" id="cpf" name="cpf">
+      </div>
+
       <div class="form-group col-md-4">
         <label name="senha">Senha:</label>
         <input type="password" [(ngModel)]="cliente.senha" class="form-control" id="senha" name="senha">
       </div>
-      
+
     </div>
-    
+
     <hr />
     <div id="actions" class="row">
       <div class="col-md-12">
         <button type="submit" class="btn btn-primary">Salvar</button>
         <a routerLink="/admin/lista-cliente" class="btn btn-default">Voltar</a>
-      </div> 
+      </div>
     </div>
   </form>
 </div>

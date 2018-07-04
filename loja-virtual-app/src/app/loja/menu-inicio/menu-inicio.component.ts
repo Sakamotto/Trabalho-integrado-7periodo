@@ -40,8 +40,8 @@ export class MenuInicioComponent implements OnInit {
   }
 
   public login() {
+    console.log('Login: ', this.email, this.senha);
     this.loginService.loginAndStore(this.email, this.senha);
-    window.location.reload();
   }
 
   public logout() {

@@ -39,14 +39,14 @@
                     <label for="cupomDesconto">Calcular Frete:</label>
                 </div>
                 <div>
-                    <input class="input-sm" type="text" [(ngModel)]="cep" id="cupomDesconto" name="cupomDesconto">
+                    <input class="input-sm" type="text" [(ngModel)]="cep" id="cupomDesconto" name="cupomDesconto" required>
                     <button (click)="calcularFrete()" type="button" class="btn btn-info">Calcular</button>
                 </div>
                 <div class="panel-footer">
-                    <p>Total: <b>R$ {{subtotal + valorFrete}}</b></p>
+                    <p>Total: <b>R$ {{(subtotal + valorFrete).toFixed(2)}}</b></p>
                 </div>
                 <button type="button" class="btn btn-success btn-lg btn-block" (click)="prosseguir()">
-                    <span class="glyphicon glyphicon-credit-card"></span>&nbsp; Prosseguir ->
+                    <span class="glyphicon glyphicon-credit-card"></span>&nbsp; Prosseguir
                 </button>
             </div>
         </div>

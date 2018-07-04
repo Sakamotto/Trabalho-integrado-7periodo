@@ -22,6 +22,7 @@ export class LoginService extends ServiceBase {
                 if (auth.sucesso) {
                     localStorage.setItem('token', auth.token);
                     localStorage.setItem('user', auth.user);
+                    window.location.reload();
                 } else {
                     this.toastr.error('Login ou senha inválidos', 'Erro!');
                 }
