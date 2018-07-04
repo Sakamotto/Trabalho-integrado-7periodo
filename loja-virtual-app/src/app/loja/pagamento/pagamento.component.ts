@@ -8,11 +8,14 @@ import { ToastrService } from 'ngx-toastr';
 import { CarrinhoService } from '../carrinho/carrinho.service';
 import { ExemplarProduto } from '../../admin/produto/exemplar-produto.model';
 import { LoginService } from '../../admin/login/login.service';
+import { Cliente } from '../../admin/cliente/cliente.model';
+import { ClienteService } from '../../admin/cliente/cliente.service';
+import { PagamentoService } from './pagamento.service';
 
 @Component({
   selector: 'app-pagamento',
   templateUrl: './pagamento.component.html',
-  providers: [ProdutoService, CarrinhoService],
+  providers: [ProdutoService, CarrinhoService, ClienteService],
   styleUrls: ['./pagamento.component.css']
 })
 export class PagamentoComponent implements OnInit {
@@ -20,14 +23,21 @@ export class PagamentoComponent implements OnInit {
   public produtos: Array<ExemplarProduto> = new Array<ExemplarProduto>();
   public subtotal: number;
   public frete: number;
-  public user: any;
+  public user: Cliente = new Cliente();
+  public numeroCartao: string;
+  public nomeCartao: string;
+  public mesCartao: number;
+  public anoCartao: number;
+  public codigoSeguranca: number;
 
   constructor(private produtoService: ProdutoService,
     private carrinhoService: CarrinhoService,
     private http: Http,
     private router: Router,
     public toastr: ToastrService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private clienteService: ClienteService,
+    private pagamentoService: PagamentoService
   ) { }
 
   ngOnInit() {
@@ -53,6 +63,50 @@ export class PagamentoComponent implements OnInit {
 
   public usuarioLogado() {
     return this.loginService.usuarioLogado();
+  }
+
+  public registrar() {
+    this.clienteService.post({ cliente: this.user })
+      .subscribe(data => {
+        console.log('Usuário Registrado: ', data);
+        this.toastr.success('Usuário registrado com sucesso!', 'Sucesso!');
+        window.location.reload();
+      }, error => {
+        console.log('Erro ao registrar usuario', error);
+        this.toastr.error('Erro ao registrar usuario', 'Erro!');
+      });
+  }
+
+  public getClienteEndereco() {
+    return this.user.endereco.cidade + ' - ' + this.user.endereco.estado + ', ' + this.user.endereco.cep;
+  }
+
+  public finalizarCompra() {
+
+    if (this.camposPreenchidos()) {
+
+      let dados = {
+        exemplares: this.carrinhoService.getProdutos(),
+        clienteId: this.user.id,
+        quantidade: 1,
+        desconto: 0,
+        totalCompra: this.frete + this.subtotal
+      };
+
+      this.pagamentoService.finalizarCompra(dados).subscribe(data => {
+        console.log('Compra finalizada');
+        this.toastr.success(data.mensagem, 'Sucesso!');
+      }, error => {
+        this.toastr.error(error.mensagem, 'Erro!');
+      });
+    } else {
+      this.toastr.error('Todos os dados de pagamento deve ser preenchido', 'Erro');
+    }
+
+  }
+
+  public camposPreenchidos() {
+    return (this.numeroCartao && this.nomeCartao && this.mesCartao && this.anoCartao && this.codigoSeguranca);
   }
 
 }

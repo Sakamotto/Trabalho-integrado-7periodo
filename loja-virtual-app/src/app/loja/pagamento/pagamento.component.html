@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <P>
-                                <b>Endereço:</b> Maria de Lourdes garcia, Ilha de Monte Belo, Vitoria-ES - 29051250</P>
+                                <b>Endereço:</b> {{getClienteEndereco()}}</P>
                         </div>
                     </div>
                 </div>
@@ -36,9 +36,9 @@
                 <b>Entrega:</b> R$ {{frete}}
                 <hr />
                 <div class="panel-footer">
-                    <p>Total:</p>
+                    <p>Total: {{(subtotal + frete).toFixed(2)}} </p>
                 </div>
-                <button disabled="!usuarioLogado()" type="button" class="btn btn-success btn-lg btn-block" (click)="adicionarCarrinho(true)">
+                <button [disabled]="!usuarioLogado()" type="button" class="btn btn-success btn-lg btn-block" (click)="finalizarCompra()">
                     <span class="glyphicon glyphicon-credit-card"></span>&nbsp; Finalizar
                 </button>
             </div>
@@ -55,12 +55,12 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label name="cartão">Numero do cartão</label>
-                                <input type="text" [(ngModel)]="cartao" class="form-control" id="cartao" name="cartao">
+                                <input type="text" [(ngModel)]="numeroCartao" class="form-control" id="cartao" name="cartao">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label name="nome">Nome impresso no cartão</label>
-                                <input type="text" [(ngModel)]="nome" class="form-control" id="nome" name="nome">
+                                <input type="text" [(ngModel)]="nomeCartao" class="form-control" id="nome" name="nome">
                             </div>
                         </div>
                         <div class="row">
@@ -71,15 +71,15 @@
                         <div class="row">
                             <div class="form-group col-md-2">
                                 <label name="parcelas">Mes</label>
-                                <input type="number" [(ngModel)]="parcelas" class="form-control" id="parcelas" name="parcelas">
+                                <input type="number" [(ngModel)]="mesCartao" class="form-control" id="parcelas" name="parcelas">
                             </div>
                             <div class="form-group col-md-2">
                                 <label name="nome"> Ano</label>
-                                <input type="text" [(ngModel)]="ano" class="form-control" id="ano" name="ano">
+                                <input type="text" [(ngModel)]="anoCartao" class="form-control" id="ano" name="ano">
                             </div>
                             <div class="form-group col-md-2">
                                 <label name="nome">Codigo de segurança</label>
-                                <input type="text" [(ngModel)]="seguranca" class="form-control" id="seguranca" name="seguranca">
+                                <input type="text" [(ngModel)]="codigoSeguranca" class="form-control" id="seguranca" name="seguranca">
                             </div>
 
                         </div>
@@ -101,33 +101,38 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label name="cartão">Nome</label>
-                                <input type="text" [(ngModel)]="nomeCliente" class="form-control" id="nomeCliente" name="nomeCliente">
+                                <input type="text" [(ngModel)]="user.nome" class="form-control" id="nomeCliente" name="nomeCliente">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label name="nome">Sobrenome</label>
-                                <input type="text" [(ngModel)]="sobrenome" class="form-control" id="sobrenome" name="sobrenome">
+                                <input type="text" [(ngModel)]="user.sobrenome" class="form-control" id="sobrenome" name="sobrenome">
                             </div>
 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-2">
                                 <label name="nome">Data de Nascimento</label>
-                                <input type="text" [(ngModel)]="dataNascimento" class="form-control" id="dataNascimento" name="dataNascimento">
+                                <input type="text" [(ngModel)]="user.dataNascimento" class="form-control" id="dataNascimento" name="dataNascimento">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label name="nome">Telefone</label>
+                                <input type="text" [(ngModel)]="user.telefone" class="form-control" id="telefone" name="telefone">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label name="nome">CPF</label>
-                                <input type="text" [(ngModel)]="cpf" class="form-control" id="cpf" name="cpf">
+                                <input type="text" [(ngModel)]="user.cpf" class="form-control" id="cpf" name="cpf">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label name="nome">Email</label>
-                                <input type="text" [(ngModel)]="email" class="form-control" id="email" name="email">
+                                <input type="text" [(ngModel)]="user.email" class="form-control" id="email" name="email">
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label>Senha</label>
-                                <input type="text" [(ngModel)]="senha" class="form-control" id="senha" name="senha">
+                                <input type="text" [(ngModel)]="user.senha" class="form-control" id="senha" name="senha">
                             </div>
 
                             <div class="form-group col-md-2">
@@ -152,28 +157,37 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label name="nome">CEP</label>
-                                <input type="text" [(ngModel)]="cep" class="form-control" id="cep" name="cep">
+                                <input type="text" [(ngModel)]="user.endereco.cep" class="form-control" id="cep" name="cep">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label name="nome">Bairro</label>
-                                <input type="text" [(ngModel)]="bairro" class="form-control" id="bairro" name="bairro">
+                                <input type="text" [(ngModel)]="user.endereco.bairro" class="form-control" id="bairro" name="bairro">
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label name="nome">Estado</label>
-                                <input type="text" [(ngModel)]="estado" class="form-control" id="estado" name="estado">
+                                <input type="text" [(ngModel)]="user.endereco.estado" class="form-control" id="estado" name="estado">
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label name="cartão">Cidade</label>
-                                <input type="text" [(ngModel)]="cidade" class="form-control" id="cidade" name="cidade">
+                                <input type="text" [(ngModel)]="user.endereco.cidade" class="form-control" id="cidade" name="cidade">
                             </div>
                         </div>
                         <div class="row">
 
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="panel-body">
+                    <div class="row">
+                        <button type="button" class="btn btn-success btn-lg btn-block" (click)="registrar()">
+                            <span class="glyphicon glyphicon-credit-card"></span>&nbsp; Registrar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

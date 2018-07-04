@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import {PagamentoComponent} from './pagamento.component';
 import { PagamentoRoutingModule } from './pagamento.routing.module';
+import { PagamentoService } from './pagamento.service';
 // import { SharedModule } from '../../admin/shared/shared.module';
 
 @NgModule({
@@ -21,7 +22,7 @@ import { PagamentoRoutingModule } from './pagamento.routing.module';
     declarations: [
         PagamentoComponent
     ],
-    providers: []
+    providers: [PagamentoService]
 })
 export class PagamentoModule {
 
