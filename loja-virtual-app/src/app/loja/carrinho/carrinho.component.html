@@ -43,9 +43,9 @@
                     <button (click)="calcularFrete()" type="button" class="btn btn-info">Calcular</button>
                 </div>
                 <div class="panel-footer">
-                    <p>Total:</p>
+                    <p>Total: <b>R$ {{subtotal + valorFrete}}</b></p>
                 </div>
-                <button type="button" class="btn btn-success btn-lg btn-block" (click)="adicionarCarrinho(true)">
+                <button type="button" class="btn btn-success btn-lg btn-block" (click)="prosseguir()">
                     <span class="glyphicon glyphicon-credit-card"></span>&nbsp; Prosseguir ->
                 </button>
             </div>

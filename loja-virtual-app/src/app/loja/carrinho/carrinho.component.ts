@@ -34,7 +34,8 @@ export class CarrinhoComponent implements OnInit {
 
   constructor(private produtoService: ProdutoService,
     private carrinhoService: CarrinhoService,
-    private http: Http
+    private http: Http,private router: Router,
+    public toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -42,7 +43,7 @@ export class CarrinhoComponent implements OnInit {
   }
 
   public carregar() {
-    const listaCarrinho: Array<number> = this.carrinhoService.getProdutos();
+    const listaCarrinho: Array<number> = this.carrinhoService.getProdutos() ? this.carrinhoService.getProdutos(): new Array<number>();
     listaCarrinho.forEach(p => this.produtoService.getExemplarCarrinho(p)
       .subscribe(data => {
         this.produtos.push(data);
@@ -85,7 +86,6 @@ export class CarrinhoComponent implements OnInit {
     for (let i = 0; i < this.produtos.length; i++) {
       this.subtotal += (this.produtos[i].quantidadeComprada * this.produtos[i].produto.venda);
     }
-    this.subtotal += this.valorFrete;
   }
 
   public calcularFrete() {
@@ -97,4 +97,12 @@ export class CarrinhoComponent implements OnInit {
     }
   }
 
+  public prosseguir(){
+    this.carrinhoService.adicionarCliente(1);
+    this.carrinhoService.adicionarSubtotal(this.subtotal);
+    this.carrinhoService.adicionarFrete(this.valorFrete);
+    this.toastr.success('Sucesso!', 'Produto Adicionado ao Carrinho!');
+    this.router.navigate(['loja/pagamento']);
+    
+  }
 }

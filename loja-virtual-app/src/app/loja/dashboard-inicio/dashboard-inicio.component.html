@@ -85,7 +85,8 @@
         </div>
       </div>
 
-      <div class="col-md-9">
+      <loading-spinner *ngIf="showSpinner"></loading-spinner>
+      <div *ngIf="!showSpinner" class="col-md-9">
         <div class="row">
 
           <loading-spinner *ngIf="showSpinner"></loading-spinner>

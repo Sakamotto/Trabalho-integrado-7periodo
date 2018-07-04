@@ -28,6 +28,7 @@ import { DashboardInicioModule } from './loja/dashboard-inicio/dashboard-inicio.
 import { MenuInicioModule } from './loja/menu-inicio/menu-inicio.module';
 import { SharedModule } from './admin/shared/shared.module';
 import { CarrinhoModule } from './loja/carrinho/carrinho.module';
+import {PagamentoModule} from './loja/pagamento/pagamento.module';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { CarrinhoModule } from './loja/carrinho/carrinho.module';
     ProdutoDetalheModule,
     MenuInicioModule,
     CarrinhoModule,
-    SharedModule
+    SharedModule,
+    PagamentoModule
   ],
   exports: [],
   providers: [LoginService, AuthGuardService, ToastrService],
