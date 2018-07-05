@@ -43,8 +43,13 @@ export class CarrinhoService {
         localStorage.setItem('cliente', JSON.stringify(clienteId));
 
     }
+
     getCliente() {
         return JSON.parse(localStorage.getItem('cliente'));
+    }
+
+    getQuantidade() {
+        return JSON.parse(localStorage.getItem('quantidade'));
     }
 
     adicionarSubtotal(subtotal: number) {
@@ -54,10 +59,15 @@ export class CarrinhoService {
     getSubtotal() {
         return JSON.parse(localStorage.getItem('subtotal'));
     }
+
     adicionarFrete(frete: number) {
         localStorage.setItem('frete', JSON.stringify(frete));
-
     }
+
+    adicionarQuantidade(quantidade: number) {
+        localStorage.setItem('quantidade', JSON.stringify(quantidade));
+    }
+
     getfrete() {
         return JSON.parse(localStorage.getItem('frete'));
     }

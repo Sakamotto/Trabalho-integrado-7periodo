@@ -5,13 +5,12 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class PagamentoService extends ServiceBase {
-    constructor(protected http: Http,
-        protected router: Router) {
+export class PerfilService extends ServiceBase {
+    constructor(protected http: Http, protected router: Router) {
         super(http, router, 'compra');
     }
 
-    public finalizarCompra(dados: any): Observable<any> {
-        return this.postAny('finalizarCompra', dados);
+    public minhasCompras(clienteId: number): Observable<any> {
+        return this.postAny('minhasCompras', {clienteId: clienteId});
     }
 }

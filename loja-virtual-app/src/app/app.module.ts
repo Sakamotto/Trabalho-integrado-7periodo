@@ -29,6 +29,7 @@ import { MenuInicioModule } from './loja/menu-inicio/menu-inicio.module';
 import { SharedModule } from './admin/shared/shared.module';
 import { CarrinhoModule } from './loja/carrinho/carrinho.module';
 import {PagamentoModule} from './loja/pagamento/pagamento.module';
+import { MinhasComprasModule } from './loja/perfil/minhas-compras.module';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import {PagamentoModule} from './loja/pagamento/pagamento.module';
     MenuInicioModule,
     CarrinhoModule,
     SharedModule,
-    PagamentoModule
+    PagamentoModule,
+    MinhasComprasModule
   ],
   exports: [],
   providers: [LoginService, AuthGuardService, ToastrService],

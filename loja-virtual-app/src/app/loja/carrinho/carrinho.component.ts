@@ -99,6 +99,7 @@ export class CarrinhoComponent implements OnInit {
 
   public prosseguir() {
     // this.carrinhoService.adicionarCliente(1);
+    this.carrinhoService.adicionarQuantidade(this.quantidade);
     this.carrinhoService.adicionarSubtotal(this.subtotal);
     this.carrinhoService.adicionarFrete(this.valorFrete);
     // this.toastr.success('Sucesso!', 'Produto Adicionado ao Carrinho!');

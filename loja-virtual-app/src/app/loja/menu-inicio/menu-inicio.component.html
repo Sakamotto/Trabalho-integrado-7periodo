@@ -21,14 +21,15 @@
             </li>
 
             <li class="dropdown">
-                <a *ngIf="usuarioLogado()" style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <a *ngIf="usuarioLogado()" style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    aria-expanded="false">
                     <span class="glyphicon glyphicon-user"></span> {{userName}}</a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a style="cursor: pointer" >Meu Perfil</a>
+                        <a style="cursor: pointer">Meu Perfil</a>
                     </li>
                     <li>
-                        <a style="cursor: pointer">Minhas Compras</a>
+                        <a style="cursor: pointer" routerLink="/loja/minhas-compras">Minhas Compras</a>
                     </li>
                     <li>
                         <a style="cursor: pointer" (click)="logout()">Sair</a>

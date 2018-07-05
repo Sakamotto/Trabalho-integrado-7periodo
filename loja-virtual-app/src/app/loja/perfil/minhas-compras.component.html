@@ -1,0 +1,74 @@
+<div class="container-fluid page-content" style="margin-top: 7% !important;">
+  <!-- <div id="top" class="row">
+    <div class="col-md-3">
+        <h2>Minhas Compras</h2>
+    </div>
+ 
+    <div class="col-md-6">
+        <div class="input-group h2">
+            <input name="data[search]" class="form-control" id="search" type="text" [(ngModel)]="filtroNomeProduto" (ngModelChange)="buscar()" placeholder="Pesquisar produtos">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </div>
+ 
+    <div class="col-md-3">
+        <a [routerLink]="['/admin/produto', 0]" class="btn btn-primary pull-right h2">Novo Produto</a>
+    </div>
+  </div> -->
+
+  <div id="list" class="row">
+ 
+    <div class="container-fluid col-md-12">
+        <table class="table table-striped" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Produto</th>
+                    <th>Imagem</th>
+                    <th>Data Pagamento</th>
+                    <th>Valor Total</th>
+                    <!-- <th class="actions">Ações</th> -->
+                 </tr>
+            </thead>
+            <tbody>
+ 
+                <tr *ngFor="let compra of minhasCompras">
+                    <td>{{compra.id}}</td>
+                    <td>
+                        <img style="width: 130px; height: 150px;" src="{{compra.exemplar.produto.imagens[0].link}}" alt="Imagem">
+                    </td>
+                    <td>{{compra.exemplar.produto.nome}}</td>
+                    <td>{{compra.dataPagamento | date: 'yyyy/MM/dd'}}</td>
+                    <td>{{compra.total}}</td>
+                    <!-- <td>{{produto.venda}}</td> -->
+                    <!-- <td class="actions">
+                        <a class="btn btn-success btn-xs" [routerLink]="['/admin/view-produto', produto.id]">Visualizar</a>
+                        <a class="btn btn-warning btn-xs" [routerLink]="['/admin/produto', produto.id]" >Editar</a>
+                        <a class="btn btn-danger btn-xs" (click)="marcarParaExcluir(produto)" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                    </td> -->
+                </tr>
+ 
+            </tbody>
+         </table>
+ 
+     </div>
+ </div> <!-- /#list -->
+ <hr />
+ <div id="bottom" class="row">
+  <div class="col-md-12">
+       
+      <ul class="pagination">
+          <li class="disabled"><a>&lt; Anterior</a></li>
+          <li class="disabled"><a>1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li class="next"><a href="#" rel="next">Próximo &gt;</a></li>
+      </ul><!-- /.pagination -->
+
+  </div>
+</div> <!-- /#bottom -->
+</div>

@@ -68,11 +68,9 @@ export class PagamentoComponent implements OnInit {
   public registrar() {
     this.clienteService.post({ cliente: this.user })
       .subscribe(data => {
-        console.log('Usuário Registrado: ', data);
         this.toastr.success('Usuário registrado com sucesso!', 'Sucesso!');
         window.location.reload();
       }, error => {
-        console.log('Erro ao registrar usuario', error);
         this.toastr.error('Erro ao registrar usuario', 'Erro!');
       });
   }
@@ -85,7 +83,7 @@ export class PagamentoComponent implements OnInit {
 
     if (this.camposPreenchidos()) {
 
-      let dados = {
+      const dados = {
         exemplares: this.carrinhoService.getProdutos(),
         clienteId: this.user.id,
         quantidade: 1,
@@ -94,8 +92,9 @@ export class PagamentoComponent implements OnInit {
       };
 
       this.pagamentoService.finalizarCompra(dados).subscribe(data => {
-        console.log('Compra finalizada');
         this.toastr.success(data.mensagem, 'Sucesso!');
+        this.carrinhoService.removerProdutos();
+        this.router.navigate(['/loja/minhas-compras']);
       }, error => {
         this.toastr.error(error.mensagem, 'Erro!');
       });

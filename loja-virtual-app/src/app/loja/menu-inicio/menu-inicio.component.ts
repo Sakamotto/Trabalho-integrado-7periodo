@@ -40,12 +40,12 @@ export class MenuInicioComponent implements OnInit {
   }
 
   public login() {
-    console.log('Login: ', this.email, this.senha);
     this.loginService.loginAndStore(this.email, this.senha);
   }
 
   public logout() {
     this.loginService.logoutCliente();
+    this.router.navigate(['/loja']);
     window.location.reload();
   }
 

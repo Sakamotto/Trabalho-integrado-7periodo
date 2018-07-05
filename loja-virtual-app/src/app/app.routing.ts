@@ -25,9 +25,7 @@ const APP_ROUTES: Routes = [
     {path: '', redirectTo: 'loja', pathMatch: 'full'},
     {path: 'loja', component: MenuInicioComponent},
     {path: 'admin', component: HomeComponent },
-        // {path: 'produto-detalhe/:id', component: ProdutoDetalheComponent},
     {path: 'login', component: LoginComponent},
-    // {path: 'carrinho', component: CarrinhoComponent},
     {path: '**', redirectTo: 'login'} // rever
 
 ];
