@@ -62,11 +62,10 @@
             </div>
         </div>
 
-        <a class="list-group-item list-group-item-info catalog-filter-head">
-          <span class="glyphicon glyphicon-plus"></span> Categoria
-        </a>
 
-        <ul class="catalog-filter-list list-group">
+          <div class="list-group">
+              <a class="list-group-item list-group-item-info catalog-filter-head">
+                  <span class="glyphicon glyphicon-plus"></span> Categoria</a>
             <select class="form-control" name="comboCategorias" (change)="buscar()" [(ngModel)]="filtroCategoriaId">
               <option [ngValue]="null">Selecione</option>
               <option *ngFor="let c of categorias;" [ngValue]="c.id">{{ c.nome }}</option>
@@ -75,7 +74,7 @@
             <input id="categoria-{{c.id}}" type="checkbox" (change)="buscar(c.id, this.value)" name="categoria-{{c.id}}">
             <span>{{ c.nome }}</span>
           </li> -->
-        </ul>
+          </div>
 
         <div class="list-group">
           <a class="list-group-item list-group-item-info catalog-filter-head">
